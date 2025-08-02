@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Schedule</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            max-width: 700px;
+            margin-top: 50px;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .form-inline {
+            justify-content: center;
+        }
+        .table-container {
+            margin-top: 30px;
+        }
+        button {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #ff4dff;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Check your upcoming exam schedule</h1>
+        <form id="examForm" class="form-inline">
+            <div class="form-group mb-2">
+                <label for="regno" class="sr-only">Student Registration Number</label>
+                <input type="text" class="form-control" id="regno" name="regno" placeholder="Registration Number" required>
+            </div>
+            <div class="form-group mb-2 ml-2">
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 ml-2" style="background-color: orangered;">Check Schedule</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('examForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var regno = document.getElementById('regno').value;
+            var password = document.getElementById('password').value;
+            if (regno === password) {
+                window.location.href = 'home.php?regno=' + regno;
+            } else {
+                alert('Registration number and password do not match. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allot Exam</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .animate__animated.animate__fadeInUp {
+            --animate-duration: 1.5s;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchBatches();
+
+            document.getElementById("sem").addEventListener("change", fetchCourseIds);
+            document.getElementById("batch").addEventListener("change", fetchCourseIds);
+            document.getElementById("iat").addEventListener("change", fetchCourseIds);
+        });
+
+        function fetchBatches() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "fetch_batches.php", true);
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var batches = JSON.parse(this.responseText);
+                    var batchSelect = document.getElementById("batch");
+                    batches.forEach(function(batch) {
+                        var option = document.createElement("option");
+                        option.value = batch;
+                        option.text = batch;
+                        batchSelect.add(option);
+                    });
+                }
+            };
+            xhr.send();
+        }
+
+        function fetchCourseIds() {
+            var batch = document.getElementById("batch").value;
+            var sem = document.getElementById("sem").value;
+            var sem_number = document.getElementById("sem_number").value;
+            var iat = document.getElementById("iat").value;
+            console.log("Batch: " + batch + ", Sem: " + sem + ", No of Sem: " + sem_number + ", IAT: " + iat); // Debugging line
+            if (batch && sem && sem_number && iat) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "fetch_course_ids.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var courseSelect = document.getElementById("course_id");
+                        courseSelect.innerHTML = this.responseText;
+                    }
+                };
+                xhr.send("batch=" + batch + "&sem=" + sem + "&no_of_sem=" + sem_number + "&iat=" + iat);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container animate__animated animate__fadeInUp">
+        <h2 class="text-center mb-4">Allot Exam</h2>
+        <form method="post" action="allot_exam.php" class="p-4 border rounded bg-light">
+            <div class="form-group">
+                <label for="batch" class="form-label">Batch:</label>
+                <select id="batch" name="batch" class="form-control" required>
+                    <option value="">Select Batch</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sem" class="form-label">Semester:</label>
+                <select id="sem" name="sem" class="form-control" required>
+                    <option value="">Select Semester</option>
+                    <option value="odd">Odd</option>
+                    <option value="even">Even</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sem_number" class="form-label">Semester Number:</label>
+                <select id="sem_number" name="sem_number" class="form-control" required>
+                    <option value="">Select Semester Number</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+
+            <!-- Removed the iat input box -->
+            <div class="form-group">
+                <label for="iat" class="form-label">IAT number:</label>
+                <select id="iat" name="iat" class="form-control" required>
+                    <option value="">Select IAT Number</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="course_id" class="form-label">Course ID:</label>
+                <select id="course_id" name="course_id" class="form-control" required>
+                    <option value="">Select Course ID</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="exam_date" class="form-label">Exam Date:</label>
+                <input type="date" id="exam_date" name="exam_date" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Allot Exam</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
