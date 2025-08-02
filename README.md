@@ -69,6 +69,8 @@ This project is modular and extensible. You can integrate features like:
 
 3. Exam center/room allocation
 
+4. Department-specific access control
+
 Images:
 
 FIGURE-1 ER DIAGRAM OF THE EXAM ALLOTMENT AND SCHEDULE PORTEL TABLES
@@ -82,7 +84,3 @@ FIGURE-3 EXAM SCHEDULE LOGIN PAGE
 
 FIGURE-4 EXAM SCHEDULE PAGE
 <img width="692" height="323" alt="image" src="https://github.com/user-attachments/assets/be85f408-0171-4cf7-b5dd-ac9a93a116d8" />
-
-
-
-Department-specific access control
